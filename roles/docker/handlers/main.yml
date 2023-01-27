@@ -1,0 +1,16 @@
+---
+- name: post_docker_notify
+  become: true
+  community.general.ini_file:
+    path: /etc/wsl.conf
+    section: boot
+    option: "{{ item.option  }}"
+    value: "{{ item.value }}"
+    create: true
+    state: present
+  loop:
+    - option: systemd
+      value: 'true'
+    - option: command
+      value: service docker start
+

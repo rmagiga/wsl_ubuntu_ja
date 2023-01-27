@@ -1,0 +1,4 @@
+---
+- name: ハードウェアクロック設定
+  become: true
+  ansible.builtin.shell: hwclock --hctosys

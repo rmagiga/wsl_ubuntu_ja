@@ -1,0 +1,3 @@
+---
+keying_path: /etc/apt/keyrings/docker.gpg
+dpkg_arch: "{{ 'amd64' if ansible_architecture == 'x86_64' else ansible_architecture }}"

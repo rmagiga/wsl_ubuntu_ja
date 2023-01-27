@@ -1,0 +1,35 @@
+---
+- name: WSL cudaライブラリの有無確認
+  ansible.builtin.stat:
+    path: /usr/lib/wsl/lib/libcuda.so
+  register: libcuda_stat
+- name: 共有ライブラリの変更
+  block:
+    - name: 共有ライブラリフォルダ作成
+      ansible.builtin.file:
+        path: /usr/lib/wsl/lib2
+        state: directory
+        mode: "755"
+      register: lib2_dir
+    - name: WSL共有ライブラリファイル一覧取得
+      ansible.builtin.find:
+        path: /usr/lib/wsl/lib
+        pattern: "*"
+      register: ld_files
+    - name: シンボリックリンク
+      ansible.builtin.file:
+        src: "/usr/lib/wsl/lib/{{ item }}"
+        dest: "/usr/lib/wsl/lib2/{{ item }}"
+        state: link
+      with_items: "{{ ld_files.files | map(attribute='path') | map('basename') }}"
+      register: link_files
+    - name: change_ld.wsl.conf
+      ansible.builtin.lineinfile:
+        path: /etc/ld.so.conf.d/ld.wsl.conf
+        line: "/usr/lib/wsl/lib2"
+        regexp: "^/usr/lib/wsl/lib$"
+    - name: ldconfig_cache_clear
+      ansible.builtin.shell: ldconfig
+      when: link_files is changed
+  when: libcuda_stat.stat.exists
+  become: true

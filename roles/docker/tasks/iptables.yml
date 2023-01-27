@@ -1,0 +1,6 @@
+---
+- name: iptablesの設定
+  become: true
+  community.general.alternatives:
+    name: iptables
+    path: /usr/sbin/iptables-legacy

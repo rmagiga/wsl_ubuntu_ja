@@ -1,0 +1,13 @@
+---
+- name: ldconfig
+  become: true
+  community.general.ini_file:
+    path: /etc/wsl.conf
+    section: automount
+    option: "{{ item.option  }}"
+    value: "{{ item.value }}"
+    create: true
+    state: present
+  loop:
+    - option: ldconfig
+      value: 'false'

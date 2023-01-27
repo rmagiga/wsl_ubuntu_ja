@@ -1,0 +1,11 @@
+---
+- name: fcitx-mozcのインストールと設定
+  become: true
+  ansible.builtin.apt:
+    name:
+      - fcitx-mozc
+      - dbus-x11
+    state: present
+  notify:
+    - dbus-uuidgen
+    - env-fcitx

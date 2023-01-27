@@ -1,0 +1,8 @@
+---
+- name: TimeZone設定
+  become: true
+  ansible.builtin.file:
+    src: /usr/share/zoneinfo/Asia/Tokyo
+    dest: /etc/localtime
+    state: link
+    force: true

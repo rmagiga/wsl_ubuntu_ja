@@ -1,0 +1,5 @@
+---
+- name: ハードウェアクロック設定
+  ansible.builtin.import_tasks: hwclock.yml
+- name: OS更新
+  ansible.builtin.import_tasks: apt.yml
