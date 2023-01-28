@@ -7,3 +7,5 @@
   ansible.builtin.import_tasks: language-pack.yml
 - name: Ubuntu / input method
   ansible.builtin.import_tasks: fcitx-mozc.yml
+- name: Ubuntu / メッセージ
+  ansible.builtin.import_tasks: finish-msg.yml

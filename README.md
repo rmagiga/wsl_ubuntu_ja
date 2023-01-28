@@ -1,60 +1,54 @@
+# WSL Ubuntu Ja
 
-$ sudo apt update && sudo apt upgrade -y
-$ sudo apt install git -y
-
-
-$ sudo apt install software-properties-common
-$ sudo apt-add-repository --yes --update ppa:ansible/ansible
-$ sudo apt install ansible -y
+Ansibleを利用した、WSL上のUbuntu 22.04に、日本語の開発環境を構築するプロジェクトです。   
 
 
-gnome-tweak-tool
+## 必要要件
 
+WSL2上で、Ubuntu 22.04がインストールされているが稼働状態が動かすために必要です。
+初期インストールで、ユーザーIDとパスワードが設定されていれば動くようにしています。
 
-u desktop       Debian desktop environment
-u gnome-desktop GNOME
-u xfce-desktop  Xfce
-u gnome-flashback-desktop       GNOME Flashback
-u kde-desktop   KDE Plasma
-u cinnamon-desktop      Cinnamon
-u mate-desktop  MATE
-u lxde-desktop  LXDE
-u lxqt-desktop  LXQt
-u web-server    web server
-u ssh-server    SSH server
-u laptop        laptop
+- Windows 11
+- WSL2
+- WSLg
+- Ubuntu 22.04
 
+## 使い方
 
-manpages-ja manpages-ja-dev language-pack-gnome-ja gnome-user-docs-ja libreoffice-help-ja libreoffice-l10n-ja thunderbird-locale-ja
+### apt update
 
+現在インストールされているプログラムを最新にしておきます。
 
-次やること
+```bash
+sudo apt update && sudo apt upgrade -y
+```
 
-dockerのインストールと起動、helloworld
+### Ansibleのインストール
 
+Ansibleに必要なシェルもプロジェクトに入っているので、git cloneで持ってきます。  
+gitコマンドは、初期状態で入っているはずです。
 
-/sbin/ldconfig.real: /usr/lib/wsl/lib/libcuda.so.1 is not a symbolic link
-###
-wsl -e /bin/bash
-cd /mnt/c/Windows/System32/lxss/lib
-ln -s libcuda.so.1.1 libcuda.so.1
-ln -s libcuda.so.1.1 libcuda.so
-###
+Ubuntu上で以下のコマンドを実行します。
+持ってきたプロジェクト上で、install.shを実行するとAnsibleのインストールが開始されます。
+内部で、「sudo」を実行しているので、入力プロンプトが出たら、パスワードを入力してください。
 
-###
-export PATH="/usr/local/cuda/bin:$PATH"
-export LD_LIBRARY_PATH="/usr/local/cuda/lib64:$LD_LIBRARY_PATH"
-###
+```bash
+$ git clone https://github.com/rmagiga/wsl_ubuntu_ja.git
+```
 
-###
-[automount]
-ldconfig = false
+```
+$ wsl_ubuntu_ja
+$ ./install.sh
+```
 
-sudo mkdir /usr/lib/wsl/lib2
-sudo ln -s /usr/lib/wsl/lib/* /usr/lib/wsl/lib2
+### Ubuntuの日本語化設定を実行する
 
-sudo sed -i -e 's|^/usr/lib/wsl/lib|/usr/lib/wsl/lib2|' /etc/ld.so.conf.d/ld.wsl.conf
-###
+```bash
+$ ./run.sh 01_ubuntu_ja.yml
+```
 
+### Dockerのインストール
 
-sudo update-alternatives --set iptables /usr/sbin/iptables-legacy
+```bash
+$ ./run.sh 02_docker.yml
+```
