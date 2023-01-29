@@ -31,5 +31,7 @@
     - name: ldconfig_cache_clear
       ansible.builtin.shell: ldconfig
       when: link_files is changed
+      notify:
+        - post_ldconfig_notify
   when: libcuda_stat.stat.exists
   become: true

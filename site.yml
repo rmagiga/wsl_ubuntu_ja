@@ -1,5 +1,6 @@
 ---
-- import_playbook: 00_upgrade.yml
-- import_playbook: 01_ubuntu_ja.yml
-- import_playbook: 02_docker.yml
+- import_playbook: 00_ldconfig.yml
+- import_playbook: 01_upgrade.yml
+- import_playbook: 02_ubuntu_ja.yml
+- import_playbook: 03_docker.yml
 
