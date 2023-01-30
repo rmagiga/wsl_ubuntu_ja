@@ -3,6 +3,5 @@
   gather_facts: true
   roles:
     - common
-    - ldconfig
     - docker
 
