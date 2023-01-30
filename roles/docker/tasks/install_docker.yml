@@ -1,13 +1,4 @@
 ---
-# - name: リポジトリー設定
-#   become: true
-#   ansible.builtin.apt:
-#     name:
-#       - ca-certificates
-#       - curl
-#       - gnupg
-#       - lsb-release
-#     state: present
 - name: リポジトリーGPG
   become: true
   ansible.builtin.apt_key:

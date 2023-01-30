@@ -3,11 +3,11 @@
   become: true
   community.general.ini_file:
     path: /etc/wsl.conf
-    section: automount
+    section: boot
     option: "{{ item.option  }}"
     value: "{{ item.value }}"
     create: true
     state: present
   loop:
-    - option: ldconfig
-      value: 'false'
+    - option: systemd
+      value: 'true'
