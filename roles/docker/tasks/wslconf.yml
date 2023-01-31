@@ -9,5 +9,8 @@
     create: true
     state: present
   loop:
-    - option: systemd
-      value: 'true'
+    - option: command
+      value: 'service docker start'
+    # なぜかsystemdを有効にするとdockerのデーモン起動に失敗する
+    # - option: systemd
+    #   value: 'true'

@@ -5,3 +5,5 @@
   ansible.builtin.import_tasks: install_docker.yml
 - name: Docker / edit wsl.conf
   ansible.builtin.import_tasks: wslconf.yml
+- name: Docker / user group
+  ansible.builtin.import_tasks: user_group.yml
