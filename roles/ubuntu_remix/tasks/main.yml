@@ -1,0 +1,8 @@
+---
+- name: Ubuntu Remix / apt
+  ansible.builtin.import_tasks: apt.yml
+- name: Ubuntu Remix / locale
+  ansible.builtin.import_tasks: locale.yml
+- name: Ubuntu Remix / timezone
+  ansible.builtin.import_tasks: timezone.yml
+
