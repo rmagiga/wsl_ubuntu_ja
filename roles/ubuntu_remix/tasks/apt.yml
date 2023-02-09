@@ -17,4 +17,6 @@
   ansible.builtin.apt:
     name:
       - ubuntu-defaults-ja
+      - manpages-ja
+      - manpages-ja-dev
     update_cache: yes
