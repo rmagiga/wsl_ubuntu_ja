@@ -1,5 +1,5 @@
 ---
-- name: ldconfig
+- name: wslconf
   become: true
   community.general.ini_file:
     path: /etc/wsl.conf

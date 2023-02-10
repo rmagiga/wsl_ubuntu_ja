@@ -1,0 +1,3 @@
+---
+- name: systemd / wslconf.yml
+  ansible.builtin.import_tasks: wslconf.yml

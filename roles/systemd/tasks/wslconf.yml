@@ -1,0 +1,10 @@
+---
+- name: /etc/wsl.conf systemd
+  become: true
+  community.general.ini_file:
+    path: /etc/wsl.conf
+    section: boot
+    option: "systemd"
+    value: "true"
+    create: true
+    state: present
