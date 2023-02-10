@@ -3,6 +3,7 @@
   become: true
   ansible.builtin.apt_key:
     url: https://www.ubuntulinux.jp/{{item}}
+    keyring: /etc/apt/trusted.gpg.d/
     state: present
   loop:
     - ubuntu-jp-ppa-keyring.gpg
