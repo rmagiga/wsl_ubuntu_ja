@@ -1,18 +1,46 @@
 ---
-- name: Ubuntu Remix リポジトリーGPG
+- name: リポジトリーGPG 削除
   become: true
   ansible.builtin.apt_key:
     url: https://www.ubuntulinux.jp/{{item}}
-    keyring: /etc/apt/trusted.gpg.d/
+    keyring: "/etc/apt/keyrings/{{ item }}"
+    state: absent
+  loop:
+    - ubuntu-ja-archive-keyring.gpg
+    - ubuntu-jp-ppa-keyring.gpg
+- name: リポジトリーGPG
+  become: true
+  ansible.builtin.apt_key:
+    url: https://www.ubuntulinux.jp/{{item}}
+    keyring: "/etc/apt/keyrings/{{ item }}"
     state: present
   loop:
-    - ubuntu-jp-ppa-keyring.gpg
     - ubuntu-ja-archive-keyring.gpg
+    - ubuntu-jp-ppa-keyring.gpg
 - name: リポジトリーの登録
   become: true
-  ansible.builtin.get_url:
-    url: https://www.ubuntulinux.jp/sources.list.d/jammy.list
-    dest: /etc/apt/sources.list.d/ubuntu-ja.list
+  ansible.builtin.apt_repository:
+    repo: "deb [arch={{ dpkg_arch }} signed-by=/etc/apt/keyrings/ubuntu-ja-archive-keyring.gpg] https://www.ubuntulinux.jp/sources.list.d/jammy.list {{ ansible_distribution_release }} main"
+    filename: ubuntu-ja.list
+    state: present
+- name: リポジトリーの登録
+  become: true
+  ansible.builtin.apt_repository:
+    repo: "deb-src [arch={{ dpkg_arch }} signed-by=/etc/apt/keyrings/ubuntu-ja-archive-keyring.gpg] https://www.ubuntulinux.jp/sources.list.d/jammy.list {{ ansible_distribution_release }} main"
+    filename: ubuntu-ja.list
+    state: present
+- name: リポジトリーの登録
+  become: true
+  ansible.builtin.apt_repository:
+    repo: "deb [arch={{ dpkg_arch }} signed-by=/etc/apt/keyrings/ubuntu-ja-archive-keyring.gpg] http://archive.ubuntulinux.jp/ubuntu-ja-non-free {{ ansible_distribution_release }} multiverse"
+    filename: ubuntu-ja.list
+    state: present
+- name: リポジトリーの登録
+  become: true
+  ansible.builtin.apt_repository:
+    repo: "deb-src [arch={{ dpkg_arch }} signed-by=/etc/apt/keyrings/ubuntu-ja-archive-keyring.gpg] http://archive.ubuntulinux.jp/ubuntu-ja-non-free {{ ansible_distribution_release }} multiverse"
+    filename: ubuntu-ja.list
+    state: present
 - name: 日本語パッケージのインストール
   become: true
   ansible.builtin.apt:
