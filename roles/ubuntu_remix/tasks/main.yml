@@ -5,4 +5,5 @@
   ansible.builtin.import_tasks: locale.yml
 - name: Ubuntu Remix / timezone
   ansible.builtin.import_tasks: timezone.yml
-
+- name: Ubuntu Remix / vscode lang
+  ansible.builtin.import_tasks: vscode.yml

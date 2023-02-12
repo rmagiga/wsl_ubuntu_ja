@@ -1,0 +1,12 @@
+---
+- name: vscode のLANG環境変数
+  ansible.builtin.blockinfile:
+    path: "{{ansible_env.HOME}}/.vscode-server/server-env-setup"
+    block: |
+      if [ -f ~/.profile ]
+      then
+        . ~/.profile
+      fi
+      export LANG\=ja_JP.UTF-8
+    state: present
+    create: true

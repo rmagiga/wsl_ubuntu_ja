@@ -1,0 +1,27 @@
+---
+- name: fcitx-mozcのインストールと設定
+  become: true
+  ansible.builtin.apt:
+    name:
+      - fcitx-mozc
+      - dbus-x11
+    state: present
+- name: dbus設定
+  become: true
+  ansible.builtin.shell: sh -c "dbus-uuidgen > /var/lib/dbus/machine-id"
+  listen: dbus-uuidgen
+- name: fcitxの環境設定
+  ansible.builtin.blockinfile:
+    path: "{{ansible_env.HOME}}/.profile"
+    block: |
+      export GTK_IM_MODULE=fcitx
+      export QT_IM_MODULE=fcitx
+      export XMODIFIERS=@im=fcitx
+      export DefaultIMModule=fcitx
+      if [ $SHLVL = 1 ] ; then
+        (fcitx-autostart > /dev/null 2>&1 &)
+        xset -r 49 > /dev/null 2>&1
+      fi
+    state: present
+    create: true
+  listen: env-fcitx
