@@ -1,20 +1,31 @@
 ---
-- name: コマンドを実行する1
+- name: ubuntu-jp-ppa-keyring.gpgのファイル確認
+  stat:
+    path: /etc/apt/trusted.gpg.d/ubuntu-jp-ppa-keyring.gpg
+  register: ppa_keyring_stat
+- name: ubuntu-jp-ppa-keyring.gpg の登録
   become: true
   ansible.builtin.shell:
     cmd: sudo wget https://www.ubuntulinux.jp/ubuntu-jp-ppa-keyring.gpg -q -P /etc/apt/trusted.gpg.d/
-- name: コマンドを実行する2
+  when: not ppa_keyring_stat.stat.exists
+- name: ubuntu-ja-archive-keyring.gpgのファイル確認
+  stat:
+    path: /etc/apt/trusted.gpg.d/ubuntu-ja-archive-keyring.gpg
+  register: archive_stat
+- name: ubuntu-ja-archive-keyring.gpg の登録
   become: true
   ansible.builtin.shell:
     cmd: sudo wget https://www.ubuntulinux.jp/ubuntu-ja-archive-keyring.gpg -q -P /etc/apt/trusted.gpg.d/
-- name: コマンドを実行する3
+  when: not archive_stat.stat.exists
+- name: リポジトリーファイル確認
+  stat:
+    path: /etc/apt/sources.list.d/ubuntu-ja.list
+  register: ubuntu_ja
+- name: リポジトリーの登録
   become: true
   ansible.builtin.shell:
     cmd: sudo wget https://www.ubuntulinux.jp/sources.list.d/jammy.list -q -O /etc/apt/sources.list.d/ubuntu-ja.list
-- name: 日本語パッケージのインストール1
-  become: true
-  ansible.builtin.apt:
-    update_cache: yes
+  when: not ubuntu_ja.stat.exists
 - name: 日本語パッケージのインストール
   become: true
   ansible.builtin.apt:
