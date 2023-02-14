@@ -1,9 +1,0 @@
----
-- hosts: all
-  gather_facts: false
-  tasks:
-    - name: apt update && upgrade
-      become: true
-      ansible.builtin.apt:
-        update_cache: yes
-        upgrade: yes

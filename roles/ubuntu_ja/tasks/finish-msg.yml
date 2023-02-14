@@ -1,7 +1,0 @@
----
-# - name: finish
-#   debug: "再起動すると環境変数が変更されて、日本語環境になります。 ディストリビューションを止めるコマンド => wsl --terminate <ディストリビューション>"
-- name: 再起動を促すメッセージ
-  ansible.builtin.debug:
-    msg: "再起動すると環境変数が変更されて、日本語環境になります。 ディストリビューションを止めるコマンド => wsl --terminate <ディストリビューション>"
-  when: ansible_env.LANG | default('') != 'ja_JP.UTF-8'
